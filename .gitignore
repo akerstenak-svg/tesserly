@@ -1,40 +1,32 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+# Dependencies
+node_modules/
 
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
+# Build output
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
+dist-ssr/
 
-# Virtual environments
-.venv/
-env/
-venv/
+# Testing / coverage
+coverage/
 
-# PyInstaller
-*.manifest
-*.spec
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# IDEs
-.vscode/
+# Editor
+.vscode/*
+!.vscode/extensions.json
 .idea/
 
-# macOS
+# OS
 .DS_Store
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Vite
+*.local
