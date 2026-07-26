@@ -35,8 +35,9 @@ Vite, React, TypeScript, Vitest, Zustand, Framer Motion, Howler.js, später Capa
 ## Scoring
 
 - Pro platzierter Zelle: 1 Punkt.
-- Pro geräumter Linie: 10 Punkte × Anzahl gleichzeitig geräumter Linien (Combo).
-  Beispiel: 2 Linien gleichzeitig = 2 × 10 × 2 = 40 Punkte.
+- Pro Räum-Aktion: 10 × N² Punkte, wobei N = Anzahl gleichzeitig geräumter
+  Linien (quadratisch, damit große Combos überproportional belohnt werden).
+  Beispiel: 1 Linie = 10, 2 Linien = 40, 3 Linien = 90, 4 Linien = 160.
 - Streak-Bonus: Räumt der Spieler mit aufeinanderfolgenden Platzierungen jeweils
   mindestens 1 Linie, steigt ein Streak-Multiplikator (+0.5 pro Stufe, max 3x).
 
