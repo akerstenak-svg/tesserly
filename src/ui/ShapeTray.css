@@ -1,0 +1,17 @@
+.shape-tray {
+  display: flex;
+  gap: var(--tray-gap);
+  align-items: center;
+  justify-content: center;
+}
+
+.shape-tray__shape {
+  display: grid;
+  gap: var(--tray-cell-gap);
+}
+
+.shape-tray__cell {
+  width: var(--tray-cell-size);
+  height: var(--tray-cell-size);
+  border-radius: var(--tray-cell-radius);
+}
