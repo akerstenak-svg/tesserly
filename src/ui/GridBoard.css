@@ -12,5 +12,18 @@
 .grid-board__cell {
   width: var(--cell-size);
   height: var(--cell-size);
+  border: none;
+  padding: 0;
   border-radius: var(--cell-radius);
+  cursor: pointer;
+}
+
+.grid-board__cell--invalid {
+  animation: grid-board-invalid-blink 0.3s ease-in-out;
+}
+
+@keyframes grid-board-invalid-blink {
+  50% {
+    background-color: #ff4d4f;
+  }
 }

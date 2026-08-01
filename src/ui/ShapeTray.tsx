@@ -1,4 +1,5 @@
-// Zeigt die aktuell verfügbaren Formen nebeneinander an. Noch keine Interaktion.
+// Zeigt die aktuell verfügbaren Formen nebeneinander an. Antippen wählt
+// eine Form aus (nochmal antippen hebt die Auswahl wieder auf).
 
 import type { Shape } from '../game/shapes'
 import { colorForCell } from './colors'
@@ -6,14 +7,27 @@ import './ShapeTray.css'
 
 type ShapeTrayProps = {
   shapes: Shape[]
+  selectedShapeId?: string | null
+  onSelectShape?: (shapeId: string) => void
 }
 
-export function ShapeTray({ shapes }: ShapeTrayProps) {
+export function ShapeTray({ shapes, selectedShapeId, onSelectShape }: ShapeTrayProps) {
   return (
     <div className="shape-tray">
-      {shapes.map((shape) => (
-        <ShapePreview key={shape.id} shape={shape} />
-      ))}
+      {shapes.map((shape) => {
+        const isSelected = shape.id === selectedShapeId
+        return (
+          <button
+            key={shape.id}
+            type="button"
+            className={`shape-tray__button${isSelected ? ' shape-tray__button--selected' : ''}`}
+            onClick={() => onSelectShape?.(shape.id)}
+            aria-pressed={isSelected}
+          >
+            <ShapePreview shape={shape} />
+          </button>
+        )
+      })}
     </div>
   )
 }

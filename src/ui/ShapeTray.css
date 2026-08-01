@@ -5,6 +5,20 @@
   justify-content: center;
 }
 
+.shape-tray__button {
+  display: block;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: var(--tray-cell-radius);
+  padding: 6px;
+  cursor: pointer;
+}
+
+.shape-tray__button--selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
 .shape-tray__shape {
   display: grid;
   gap: var(--tray-cell-gap);
