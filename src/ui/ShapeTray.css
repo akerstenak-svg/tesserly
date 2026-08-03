@@ -11,12 +11,15 @@
   border: 2px solid transparent;
   border-radius: var(--tray-cell-radius);
   padding: 6px;
-  cursor: pointer;
+  cursor: grab;
+  /* Verhindert Scrollen/Text-Markieren, während mit dem Finger gezogen wird. */
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-.shape-tray__button--selected {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-bg);
+.shape-tray__button--dragging {
+  opacity: 0.35;
 }
 
 .shape-tray__shape {

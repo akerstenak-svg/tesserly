@@ -1,4 +1,5 @@
 .grid-board {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(8, var(--cell-size));
   grid-template-rows: repeat(8, var(--cell-size));
@@ -12,18 +13,33 @@
 .grid-board__cell {
   width: var(--cell-size);
   height: var(--cell-size);
-  border: none;
-  padding: 0;
   border-radius: var(--cell-radius);
-  cursor: pointer;
 }
 
-.grid-board__cell--invalid {
-  animation: grid-board-invalid-blink 0.3s ease-in-out;
+/* Eigenes Mini-Grid, exakt über dem Haupt-Grid positioniert (gleiche
+   Template-Werte). Da es absolut positioniert ist, zählt es nicht als
+   Grid-Item des Haupt-Grids und kann dessen Zeilen/Spalten nicht beeinflussen. */
+.grid-board__ghost-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(8, var(--cell-size));
+  grid-template-rows: repeat(8, var(--cell-size));
+  gap: var(--cell-gap);
+  padding: var(--cell-gap);
+  pointer-events: none;
 }
 
-@keyframes grid-board-invalid-blink {
-  50% {
-    background-color: #ff4d4f;
-  }
+.grid-board__ghost-cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border-radius: var(--cell-radius);
+}
+
+.grid-board__ghost-cell--valid {
+  background-color: rgba(64, 192, 87, 0.6);
+}
+
+.grid-board__ghost-cell--invalid {
+  background-color: rgba(255, 77, 79, 0.6);
 }
