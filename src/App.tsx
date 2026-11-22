@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { applyMove, newGame, type GameState } from './game/engine'
 import { canPlace } from './game/placement'
-import { dateSeed } from './game/rng'
 import type { Shape } from './game/shapes'
+import { GameOverOverlay } from './ui/GameOverOverlay'
 import { GridBoard, type Ghost } from './ui/GridBoard'
 import { ShapeTray } from './ui/ShapeTray'
 import './App.css'
@@ -21,8 +21,16 @@ type DragState = {
   targetCol: number | null
 } | null
 
+// Erzeugt einen eindeutigen, zufälligen Seed für eine neue Endlos-Runde, damit
+// zwei Runden nicht dieselbe Formenfolge bekommen. Der Datums-Seed (dateSeed
+// aus src/game/rng.ts) ist für den späteren Daily-Challenge-Modus reserviert,
+// nicht für den Endlos-Modus hier.
+function createEndlessSeed(): string {
+  return `endless-${Date.now()}-${Math.floor(Math.random() * 1e9)}`
+}
+
 function App() {
-  const [gameState, setGameState] = useState<GameState>(() => newGame(dateSeed(new Date())))
+  const [gameState, setGameState] = useState<GameState>(() => newGame(createEndlessSeed()))
   const [drag, setDrag] = useState<DragState>(null)
   const gridRef = useRef<HTMLDivElement>(null)
 
@@ -61,8 +69,19 @@ function App() {
   }
 
   function handleShapeDragStart(shape: Shape, slotIndex: number, clientX: number, clientY: number) {
+    // Bei Game Over ist Drag & Drop komplett gesperrt, bis neu gestartet wird.
+    if (gameState.isGameOver) {
+      return
+    }
     const cell = cellFromPointer(clientX, clientY)
     setDragState({ shape, slotIndex, targetRow: cell?.row ?? null, targetCol: cell?.col ?? null })
+  }
+
+  // Startet eine frische Runde mit neuem, zufälligem Seed und räumt einen
+  // eventuell noch laufenden Drag-Zustand auf.
+  function handleNewGame() {
+    setGameState(newGame(createEndlessSeed()))
+    setDragState(null)
   }
 
   function handleShapeDragMove(clientX: number, clientY: number) {
@@ -161,11 +180,15 @@ function App() {
     <main className="app">
       <h1>Tesserly</h1>
       <p className="app__score">Score: {gameState.score}</p>
-      <GridBoard ref={gridRef} grid={gameState.grid} ghost={ghost} />
+      <div className="app__board">
+        <GridBoard ref={gridRef} grid={gameState.grid} ghost={ghost} />
+        {gameState.isGameOver && <GameOverOverlay score={gameState.score} onNewGame={handleNewGame} />}
+      </div>
       <ShapeTray
         shapes={gameState.currentShapes}
         draggingSlotIndex={drag?.slotIndex ?? null}
         onShapeDragStart={handleShapeDragStart}
+        disabled={gameState.isGameOver}
       />
     </main>
   )

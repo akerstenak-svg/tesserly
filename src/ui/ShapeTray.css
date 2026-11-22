@@ -5,6 +5,11 @@
   justify-content: center;
 }
 
+.shape-tray--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .shape-tray__button {
   display: block;
   background: none;

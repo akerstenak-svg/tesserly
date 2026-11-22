@@ -12,14 +12,16 @@ type ShapeTrayProps = {
   // allein nicht, um EINEN bestimmten Slot eindeutig zu identifizieren.
   draggingSlotIndex?: number | null
   onShapeDragStart: (shape: Shape, slotIndex: number, clientX: number, clientY: number) => void
+  // true bei Game Over: Formen sind optisch gedimmt und nicht mehr greifbar.
+  disabled?: boolean
 }
 
 // pointermove/pointerup/pointercancel werden NICHT hier auf dem Button
 // behandelt, sondern global auf window (siehe App.tsx) - robuster gegenüber
 // vielen Re-Renders während des Ziehens. Der Button startet den Drag nur.
-export function ShapeTray({ shapes, draggingSlotIndex, onShapeDragStart }: ShapeTrayProps) {
+export function ShapeTray({ shapes, draggingSlotIndex, onShapeDragStart, disabled }: ShapeTrayProps) {
   return (
-    <div className="shape-tray">
+    <div className={`shape-tray${disabled ? ' shape-tray--disabled' : ''}`}>
       {shapes.map((shape, slotIndex) => {
         const isDragging = slotIndex === draggingSlotIndex
         return (
